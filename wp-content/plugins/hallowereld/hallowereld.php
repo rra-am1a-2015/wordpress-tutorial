@@ -44,6 +44,7 @@
     
     add_action('init', 'hallo_world_register_shortcode');
     
-    
-
+    /*
+            [hallo_wereld  firstname="Arjan" infix="de" lastname="Ruijter" picture="panda1.jpg"]
+    */
 ?>
