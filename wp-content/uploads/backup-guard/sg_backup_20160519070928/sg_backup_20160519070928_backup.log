@@ -1,0 +1,56 @@
+Date: 2016-05-19 07:09
+SG Backup version: 1.1.1
+OS: WINNT
+Server: Apache/2.4.9 (Win64) PHP/5.5.12
+User agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36
+PHP version: 5.5.12
+SAPI: apache2handler
+Codepage: Dutch_Netherlands.1252
+Int size: 4
+Int lib: gmp
+Memory limit: 128M
+Max execution time: 120
+Environment: Wordpress 4.5.2
+Backup type: 
+
+2016-05-19 07:09: Start backup
+2016-05-19 07:09: Start backup database
+2016-05-19 07:09: Total tables to backup: 13
+2016-05-19 07:09: Total rows to backup: 288
+2016-05-19 07:09: Start backup table: wp_commentmeta
+2016-05-19 07:09: End backup table: wp_commentmeta
+2016-05-19 07:09: Start backup table: wp_comments
+2016-05-19 07:09: End backup table: wp_comments
+2016-05-19 07:09: Start backup table: wp_links
+2016-05-19 07:09: End backup table: wp_links
+2016-05-19 07:09: Start backup table: wp_options
+2016-05-19 07:09: End backup table: wp_options
+2016-05-19 07:09: Start backup table: wp_postmeta
+2016-05-19 07:09: End backup table: wp_postmeta
+2016-05-19 07:09: Start backup table: wp_posts
+2016-05-19 07:09: End backup table: wp_posts
+2016-05-19 07:09: Start backup table: wp_sg_schedule
+2016-05-19 07:09: End backup table: wp_sg_schedule
+2016-05-19 07:09: Start backup table: wp_term_relationships
+2016-05-19 07:09: End backup table: wp_term_relationships
+2016-05-19 07:09: Start backup table: wp_term_taxonomy
+2016-05-19 07:09: End backup table: wp_term_taxonomy
+2016-05-19 07:09: Start backup table: wp_termmeta
+2016-05-19 07:09: End backup table: wp_termmeta
+2016-05-19 07:09: Start backup table: wp_terms
+2016-05-19 07:09: End backup table: wp_terms
+2016-05-19 07:09: Start backup table: wp_usermeta
+2016-05-19 07:09: End backup table: wp_usermeta
+2016-05-19 07:09: Start backup table: wp_users
+2016-05-19 07:09: End backup table: wp_users
+2016-05-19 07:09: End backup database
+2016-05-19 07:09: Start backup files
+2016-05-19 07:09: Backup files: wp-content,wp-content\uploads\backup-guard\sg_backup_20160519070928\sg_backup_20160519070928.sql
+2016-05-19 07:09: Number of files to backup: 504
+2016-05-19 07:09: Start backup file: wp-content
+2016-05-19 07:09: End backup file: wp-content
+2016-05-19 07:09: Start backup file: wp-content\uploads\backup-guard\sg_backup_20160519070928\sg_backup_20160519070928.sql
+2016-05-19 07:09: End backup file: wp-content\uploads\backup-guard\sg_backup_20160519070928\sg_backup_20160519070928.sql
+2016-05-19 07:09: End backup files
+2016-05-19 07:09: End backup
+2016-05-19 07:09: Total duration: 7.00 seconds
