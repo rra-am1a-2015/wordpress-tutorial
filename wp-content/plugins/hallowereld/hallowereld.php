@@ -23,8 +23,19 @@
     */
     
     
-    function hallo_world_shortcode($atts)
+    function hallo_world_shortcode($atts, $content = null)
     {
+        $output = "";
+        
+        if (!empty($content))
+        {
+            $output .= "<h1>".$content."</h1>";
+        }
+        else 
+        {
+            $output .= "<h1>Er is geen tekst tussen de shortcode tags gezet</h1>";
+        }
+        
         $hallo_world_atts = shortcode_atts(array(
             "firstname" => "Harry",
             "infix" => "de",
@@ -32,9 +43,11 @@
             "picture" => "panda1"
         ), $atts);
         
-        return "Dit is mijn eerste plugin met wordpress. Helemaal zelf gemaakt. <br>
-                Mijn naam is ".$hallo_world_atts["firstname"]." ".$hallo_world_atts["infix"]." ".$hallo_world_atts["lastname"]."<br>
-                <img class='alignnone size-medium wp-image-34' src='http://localhost/voorlichtingsavondmboutrecht/wp-content/uploads/2016/05/".$hallo_world_atts["picture"]."' />";        
+        $output .= "Dit is mijn eerste plugin met wordpress. Helemaal zelf gemaakt. <br>
+                   Mijn naam is ".$hallo_world_atts["firstname"]." ".$hallo_world_atts["infix"]." ".$hallo_world_atts["lastname"]."<br>
+                   <img class='alignnone size-medium wp-image-34' src='http://localhost/voorlichtingsavondmboutrecht/wp-content/uploads/2016/05/".$hallo_world_atts["picture"]."' />"."";        
+        return $output;
+    
     }
     
     function hallo_world_register_shortcode()
