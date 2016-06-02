@@ -33,12 +33,29 @@
             $date = date("Y-m-d H:i:s");
             echo $date;
             global $wpdb;
-        
+            /*
             $wpdb->insert("wp_users", array(
                 "user_login" => $_POST["firstname"],
-                "user_registered" => $date         
+                "user_registered" => $date,
+                "user_email" => $_POST["email"],
+                "user_pass" => MD5($_POST["password"])
             ));
-            
+            */
+            $wpdb->query(
+            $wpdb->prepare("INSERT INTO `wp_users` ( `user_login`,
+                                                     `user_registered`,
+                                                     `user_email`,
+                                                     `user_pass`)
+                                        VALUES     ( '%s',
+                                                     '%s',
+                                                     '%s',
+                                                     '%s')",
+                                                     $_POST["firstname"],
+                                                     $date,
+                                                     $_POST["email"],
+                                                     MD5($_POST["password"]))
+            );
+                                                     
             $output = "<p>Mijn naam is: ".$_POST["firstname"]." "
                                          .$_POST["infix"]." "
                                          .$_POST["lastname"]."</p>";
@@ -48,6 +65,8 @@
                         voornaam: <input type='text' name='firstname' >
                         tussenvoegsel: <input type='text' name='infix' >
                         achternaam: <input type='text' name='lastname'>
+                        email: <input type='email' name='email' >
+                        wachtwoord: <input type='password' name='password' >
                         <input type='submit' name='submit'>";               
         return $output;
     
