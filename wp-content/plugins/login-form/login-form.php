@@ -27,12 +27,21 @@
     {
         
         //var_dump($_POST);
+        global $wpdb;
+        
+        if (isset($_GET["id"]))
+        {
+            $wpdb->query(
+                $wpdb->prepare("DELETE FROM `wp_users` WHERE `id` = '%d'", $_GET["id"])               
+            );
+        }
+        
         if (isset($_POST["submit"]))
         {
             date_default_timezone_set("Europe/Amsterdam");
             $date = date("Y-m-d H:i:s");
             echo $date;
-            global $wpdb;
+            
             /*
             $wpdb->insert("wp_users", array(
                 "user_login" => $_POST["firstname"],
@@ -41,6 +50,9 @@
                 "user_pass" => MD5($_POST["password"])
             ));
             */
+            
+            
+            
             $wpdb->query(
             $wpdb->prepare("INSERT INTO `wp_users` ( `user_login`,
                                                      `user_registered`,
@@ -59,7 +71,31 @@
             $output = "<p>Mijn naam is: ".$_POST["firstname"]." "
                                          .$_POST["infix"]." "
                                          .$_POST["lastname"]."</p>";
+        } 
+        
+        $result = $wpdb->get_results("SELECT `ID`, `user_login`, `user_email` FROM `wp_users`", ARRAY_A);
+        
+         
+        //var_dump($result);
+        echo "<table>
+                <tr>
+                    <th>ID</th>
+                    <th>User Login</th>
+                    <th>User Email</th>
+                    <th></th>
+                </tr>";
+        for ($i = 0; $i < sizeof($result); $i++)
+        {
+            echo "<tr>
+                       <td>".$result[$i]["ID"]."</td>
+                       <td>".$result[$i]["user_login"]."</td>
+                       <td>".$result[$i]["user_email"]."</td>
+                       <td><a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."'><img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_drop.png' alt='kruis'></a></td>
+                  </tr>";            
         }
+        echo "</table>";
+            
+        
         
         $output .= "<form method='post' action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/'>
                         voornaam: <input type='text' name='firstname' >
