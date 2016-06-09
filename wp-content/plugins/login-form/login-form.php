@@ -79,8 +79,15 @@
             {
                 $wpdb->query(
                     $wpdb->prepare(
-                        "UPDATE `wp_users` SET `user_login` = '%s' WHERE `ID` = '%d'",
+                        "UPDATE `wp_users` SET `user_login` = '%s',
+                                               `user_nicename` = '%s',
+                                               `user_email` = '%s',
+                                               `user_registered` = '%s'
+                                               WHERE `ID` = '%d'",
                         $_POST['user_login'],
+                        $_POST['user_nicename'],
+                        $_POST['user_email'],
+                        $_POST['user_registered'],
                         $_GET['id']
                     )                    
                 );
