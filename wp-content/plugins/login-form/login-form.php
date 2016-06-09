@@ -83,6 +83,7 @@
                     <th>User Login</th>
                     <th>User Email</th>
                     <th></th>
+                    <th></th>
                 </tr>";
         for ($i = 0; $i < sizeof($result); $i++)
         {
@@ -90,7 +91,16 @@
                        <td>".$result[$i]["ID"]."</td>
                        <td>".$result[$i]["user_login"]."</td>
                        <td>".$result[$i]["user_email"]."</td>
-                       <td><a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."'><img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_drop.png' alt='kruis'></a></td>
+                       <td>
+                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."'>
+                               <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_drop.png' alt='kruis'>
+                           </a>
+                       </td>
+                       <td>
+                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."'>
+                               <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_edit.png' alt='kruis'>
+                           </a>
+                       </td>              
                   </tr>";            
         }
         echo "</table>";
