@@ -21,7 +21,7 @@
         along with {Plugin Name}. If not, see {License URI}.   
         License URI: https://www.gnu.org/licenses/gpl-2.0.html 
     */
-    
+    ob_start();
     
     function login_form_shortcode()
     {
@@ -31,9 +31,61 @@
         
         if (isset($_GET["id"]))
         {
-            $wpdb->query(
-                $wpdb->prepare("DELETE FROM `wp_users` WHERE `id` = '%d'", $_GET["id"])               
-            );
+            if ($_GET['action'] == "delete")
+            {
+                $wpdb->query(
+                    $wpdb->prepare("DELETE FROM `wp_users` WHERE `id` = '%d'", $_GET["id"])               
+                );
+                wp_redirect("http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/");
+            }
+            elseif ($_GET["action"] == "update") 
+            {
+                echo "Updaten maar..............";
+                $result =  $wpdb->get_results(
+                                $wpdb->prepare("SELECT * FROM `wp_users` WHERE `id` = '%d'", $_GET["id"]), ARRAY_A            
+                          );                         
+                //var_dump($result);
+                $record = array_shift($result);
+                //var_dump($record);
+                
+                $output = "";
+                $output .= "<form action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$_GET['id']."&action=write' method='post'>
+                                <table>
+                                    <tr>
+                                        <td style='width:200px'>User Login:</td>
+                                        <td><input type='text' name='user_login' value='".$record["user_login"]."' ></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Nice Name:</td>
+                                        <td><input type='text' name='user_nicename' value='".$record["user_nicename"]."' ></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User E-mail:</td>
+                                        <td><input type='text' name='user_email' value='".$record["user_email"]."' ></td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Registered:</td>
+                                        <td><input type='text' name='user_registered' value='".$record["user_registered"]."' ></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td><input type='submit' name='updateSubmit' ></td>
+                                    </tr>                                    
+                                </table>       
+                            </form>";                            
+                echo $output;                
+            }
+            elseif ($_GET["action"] == "write" && isset($_POST["updateSubmit"]))
+            {
+                $wpdb->query(
+                    $wpdb->prepare(
+                        "UPDATE `wp_users` SET `user_login` = '%s' WHERE `ID` = '%d'",
+                        $_POST['user_login'],
+                        $_GET['id']
+                    )                    
+                );
+                wp_redirect("http://localhost/voorlichtingsavondmboutrecht/index.php/loginform");
+            }          
         }
         
         if (isset($_POST["submit"]))
@@ -79,11 +131,11 @@
         //var_dump($result);
         echo "<table>
                 <tr>
-                    <th>ID</th>
+                    <th style='width: 50px;'>ID</th>
                     <th>User Login</th>
-                    <th>User Email</th>
-                    <th></th>
-                    <th></th>
+                    <th style='width: 400px;'>User Email</th>
+                    <th style='width: 50px;'></th>
+                    <th style='width: 50px;'></th>
                 </tr>";
         for ($i = 0; $i < sizeof($result); $i++)
         {
@@ -92,12 +144,12 @@
                        <td>".$result[$i]["user_login"]."</td>
                        <td>".$result[$i]["user_email"]."</td>
                        <td>
-                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."'>
+                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."&action=delete'>
                                <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_drop.png' alt='kruis'>
                            </a>
                        </td>
                        <td>
-                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."'>
+                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."&action=update'>
                                <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_edit.png' alt='kruis'>
                            </a>
                        </td>              
@@ -107,14 +159,14 @@
             
         
         
-        $output .= "<form method='post' action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/'>
+        $output1 .= "<form method='post' action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/'>
                         voornaam: <input type='text' name='firstname' >
                         tussenvoegsel: <input type='text' name='infix' >
                         achternaam: <input type='text' name='lastname'>
                         email: <input type='email' name='email' >
                         wachtwoord: <input type='password' name='password' >
                         <input type='submit' name='submit'>";               
-        return $output;
+        return $output1;
     
     }
     
