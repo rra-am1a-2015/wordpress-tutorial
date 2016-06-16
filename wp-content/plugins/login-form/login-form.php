@@ -110,22 +110,41 @@
             ));
             */
             
-            
+            //09:28
             
             $wpdb->query(
             $wpdb->prepare("INSERT INTO `wp_users` ( `user_login`,
                                                      `user_registered`,
                                                      `user_email`,
-                                                     `user_pass`)
+                                                     `user_pass`,
+                                                     `display_name`)
                                         VALUES     ( '%s',
+                                                     '%s',
                                                      '%s',
                                                      '%s',
                                                      '%s')",
                                                      $_POST["firstname"],
                                                      $date,
                                                      $_POST["email"],
-                                                     MD5($_POST["password"]))
+                                                     MD5($_POST["password"]),
+                                                     $_POST["firstname"]." ".$_POST["infix"]." ". $_POST["lastname"])
             );
+            
+            $inserted_id = $wpdb->insert_id;
+            
+            echo $inserted_id;
+            
+            $wpdb->query(
+                $wpdb->prepare("INSERT INTO `rra_userinfo` (`ID`,
+                                                        `address`)
+                                             VALUES    ('%d',
+                                                        '%s')",
+                                                        $inserted_id,
+                                                        $_POST["address"]
+                           )
+            );
+            
+           
                                                      
             $output = "<p>Mijn naam is: ".$_POST["firstname"]." "
                                          .$_POST["infix"]." "
@@ -164,14 +183,15 @@
         }
         echo "</table>";
             
+        //Maak extra inputtags voor Straatnaam, huisnummer, Stad, postcode, o6-nummer
         
-        
-        $output1 .= "<form method='post' action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/'>
+        $output1 .= "<form method='post' action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/' autocomplete='off'>
                         voornaam: <input type='text' name='firstname' >
                         tussenvoegsel: <input type='text' name='infix' >
                         achternaam: <input type='text' name='lastname'>
                         email: <input type='email' name='email' >
                         wachtwoord: <input type='password' name='password' >
+                        straatnaam: <input type='text' name='address' >
                         <input type='submit' name='submit'>";               
         return $output1;
     
