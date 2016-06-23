@@ -92,7 +92,28 @@
                     )                    
                 );
                 wp_redirect("http://localhost/voorlichtingsavondmboutrecht/index.php/loginform");
-            }          
+            }
+            elseif ($_GET['action'] == "showInfo")
+            {
+                $result = $wpdb->get_results(
+                     $wpdb->prepare("SELECT * FROM `rra_userinfo`, `wp_users` 
+                                     WHERE `wp_users`.`ID` = '%d' 
+                                     AND   `wp_users`.`ID` = `rra_userinfo`.`ID`",
+                                    $_GET["id"])
+                );
+                var_dump($result);
+                $record = array_shift($result);
+                echo "<div id='popUp'>
+                            <table>
+                                <tr>
+                                    <td>Adres: </td><td>".$record->address."</td>
+                                </tr>
+                                <tr>
+                                    <td>huisnummer:</td><td>".$record->housenumber."</td>
+                                </tr>
+                            </table>
+                     </div>";
+            }         
         }
         
         if (isset($_POST["submit"]))
@@ -136,11 +157,23 @@
             
             $wpdb->query(
                 $wpdb->prepare("INSERT INTO `rra_userinfo` (`ID`,
-                                                        `address`)
+                                                        `address`,
+                                                        `housenumber`,
+                                                        `city`,
+                                                        `postalcode`,
+                                                        `mobilenumber`)
                                              VALUES    ('%d',
+                                                        '%s',
+                                                        '%s',
+                                                        '%s',
+                                                        '%s',
                                                         '%s')",
                                                         $inserted_id,
-                                                        $_POST["address"]
+                                                        $_POST["address"],
+                                                        $_POST["housenumber"],
+                                                        $_POST["city"],
+                                                        $_POST["postalcode"],
+                                                        $_POST["mobilenumber"]
                            )
             );
             
@@ -162,6 +195,7 @@
                     <th style='width: 400px;'>User Email</th>
                     <th style='width: 50px;'></th>
                     <th style='width: 50px;'></th>
+                    <th style='width: 50px;'></th>
                 </tr>";
         for ($i = 0; $i < sizeof($result); $i++)
         {
@@ -176,7 +210,12 @@
                        </td>
                        <td>
                            <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."&action=update'>
-                               <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_edit.png' alt='kruis'>
+                               <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_edit.png' alt='pencil'>
+                           </a>
+                       </td>
+                       <td>
+                           <a href='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform?id=".$result[$i]["ID"]."&action=showInfo'>
+                               <img src='http://localhost/voorlichtingsavondmboutrecht/wp-content/themes/twentysixteen/images/b_info.png' alt='infoI'>
                            </a>
                        </td>              
                   </tr>";            
@@ -185,6 +224,9 @@
             
         //Maak extra inputtags voor Straatnaam, huisnummer, Stad, postcode, o6-nummer
         
+        // Maak een extra rra_personal_userinfo
+        //lengte, gewicht, haarkleur, schoenmaat, geboortedatum 
+        
         $output1 .= "<form method='post' action='http://localhost/voorlichtingsavondmboutrecht/index.php/loginform/' autocomplete='off'>
                         voornaam: <input type='text' name='firstname' >
                         tussenvoegsel: <input type='text' name='infix' >
@@ -192,6 +234,10 @@
                         email: <input type='email' name='email' >
                         wachtwoord: <input type='password' name='password' >
                         straatnaam: <input type='text' name='address' >
+                        huisnummer: <input type='text' name='housenumber' >
+                        stad: <input type='text' name='city' >
+                        postcode: <input type='text' name='postalcode' >
+                        mobiele nummer: <input type='text' name='mobilenumber' >
                         <input type='submit' name='submit'>";               
         return $output1;
     
